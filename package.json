@@ -4,13 +4,17 @@
   "description": "- Criar um package.json:\r     ```\r     npm init\r     ```\r - Utilizar node module local (primeira dependency)\r   - Instalar typescript local e informar versão para legado do projeto\r     ```\r       npm install typescript@2.6.2 --save-dev\r     ```\r - Criar .gitignore e excluir do repositório dependencias(node_modules e etc)\r     ```\r       node_modules/\r     ```\r - Criar arquivo de configuração do compilador typscript - tsconfig.json\r     ```\r     {\r       \"compilerOption\": {\r         \"target\": \"es5\" // browsers nao trabalhando 100% com es6\r         \"module\": \"amd\" // \r         \"rootDir: \"src\"\r         \"outDir\": \"public/js\"\r       }\r     }\r     ```\r - Estrurura de pastas\r   * node_modules/\r   * src/\r     * module1.ts\r     * test.ts\r   * public/\r     * test.html",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc -w ",
+    "server": "live-server ./public ",
+    "dev": "concurrently \"npm run tsc\" \"npm run server\" "
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "live-server": "^1.2.1",
-    "typescript": "^2.6.2"
+    "concurrently": "^3.6.1",
+    "live-server": "^1.2.0",
+    "typescript": "^2.9.2"
   },
   "dependencies": {
     "requirejs": "^2.3.6"
