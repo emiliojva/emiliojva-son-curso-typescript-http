@@ -1,10 +1,24 @@
+import Http from "./http";
+
 export default class PostHttp {
 
+  private http: Http;
   private end_point: string = 'http://localhost:3000/produtos';
 
-  query( callable, callableError ){
-    
-    const method = 'GET'; // verb http
+  constructor(){
+    this.http = new Http();
+  }
+  
+
+  // como era : query( callable, callableError )
+  query()
+  {
+    return this.http.get(this.end_point);
+  }
+
+  save(){
+
+    const method = 'POST'; // verb http
     const xhttp = new XMLHttpRequest(); // objeto representando requisicoes assicronas(ajax)
 
     xhttp.open(method,this.end_point);
@@ -19,11 +33,11 @@ export default class PostHttp {
       if(this.readyState == 4){ // status OK do client
         
         if(this.status == 200){
-          callable(xhttp.responseText);
+          // callable(xhttp.responseText);
         }
 
         if(this.status == 400 || this.status == 500){
-          callableError();
+          // callableError();
         }
 
       }
@@ -34,7 +48,5 @@ export default class PostHttp {
     xhttp.send();
 
   }
-
-  save(){}
 
 }

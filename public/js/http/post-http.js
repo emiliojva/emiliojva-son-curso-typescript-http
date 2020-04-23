@@ -1,12 +1,17 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./http"], function (require, exports, http_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var PostHttp = /** @class */ (function () {
         function PostHttp() {
             this.end_point = 'http://localhost:3000/produtos';
+            this.http = new http_1.default();
         }
-        PostHttp.prototype.query = function (callable, callableError) {
-            var method = 'GET'; // verb http
+        // como era : query( callable, callableError )
+        PostHttp.prototype.query = function () {
+            return this.http.get(this.end_point);
+        };
+        PostHttp.prototype.save = function () {
+            var method = 'POST'; // verb http
             var xhttp = new XMLHttpRequest(); // objeto representando requisicoes assicronas(ajax)
             xhttp.open(method, this.end_point);
             /**
@@ -18,16 +23,15 @@ define(["require", "exports"], function (require, exports) {
                 // console.log(event);
                 if (this.readyState == 4) { // status OK do client
                     if (this.status == 200) {
-                        callable(xhttp.responseText);
+                        // callable(xhttp.responseText);
                     }
                     if (this.status == 400 || this.status == 500) {
-                        callableError();
+                        // callableError();
                     }
                 }
             };
             xhttp.send();
         };
-        PostHttp.prototype.save = function () { };
         return PostHttp;
     }());
     exports.default = PostHttp;

@@ -10,6 +10,8 @@ define(["require", "exports", "./http/post-http", "module1"], function (require,
         console.log(hidratado);
     };
     var error = function () { return "faca algo"; };
-    new post_http_1.default().query(getPosts, error);
+    new post_http_1.default().query().then(function (responseText) {
+        getPosts(responseText);
+    }); //new PostHttp().query(getPosts,error);
 });
 //# sourceMappingURL=test.js.map

@@ -1,10 +1,27 @@
 {
   "compilerOptions": {
-    "target": "ES5",
-    "module": "AMD",
-    "rootDir": "src",
-    "outDir": "public/js",
-    "sourceMap": true,
+    /*
+    * Quais lib/modulos serao usados. 
+    * Ex: Posso usar a lib es2015.Promise do ES6. 
+    * E meu target de compilacao ser ES5 (maior compatibilidade com navegadores)
+    */
+    "lib": 
+    [ 
+      "dom",
+      "es5",            // ES5 em sua totalidade 
+      "es2015.promise"  // ES6 Apenas Promise
+    ],
+    "target": "ES5", // versao ES.js da saida do compilador
+    "module": "AMD", // Tipo de Gerenciador de Modulos
+    "rootDir": "src", // pasta a ser assistida para compilacao
+    "outDir": "public/js", // Pasta com .js transpilado
+    "sourceMap": true, // Map com origem do typescript(debug)
     "inlineSources": true, // está opcao inclui conteudo do .js tranpilado
+    // "typeRoots":[
+    //   "es6-promise/"
+    // ], // @types 3rd Party
+    // "types":[
+    //   "es6-promise"
+    // ]
   }
 }

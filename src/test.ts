@@ -13,4 +13,6 @@ const getPosts = ( responseText:string ) => {
 
 const error = ():any=>{ return "faca algo" }; 
 
-new PostHttp().query(getPosts,error);
+new PostHttp().query().then( (responseText:string)=>{
+  getPosts(responseText);
+}); //new PostHttp().query(getPosts,error);

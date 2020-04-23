@@ -118,7 +118,57 @@
     new PostHttp().query(getPosts,error);
 		```
 
-## 
+## CRIANDO CLASSE PARA MANIPULAR AJAX
+  - Criação de uma classe/service para lidar com requisicões assíncronas. Ex:
+  ```
+  num httpVerbs  {
+    GET   = 'GET',
+    POST  = 'POST'
+  };
+  export default class Http {
+
+    get(endpoint:string){
+      return new Promise( (resolve,reject )=>{
+        let xhttp:XMLHttpRequest = this.createXhttp(httpVerbs.GET,endpoint);
+        this.configureCallbacks(xhttp,resolve,reject);
+        xhttp.send(); // no data to send
+      });
+    }
+    ...
+    post(){}
+    delete(){}
+    put(){}
+  }
+  ```
+
+
+
+## PROMISES - CONFIGURAÇÃO PARA ADICIONAR EM TARGETS ES5
+
+  - Instalação do @types es6-promise
+  ```
+  npm install es6-promise --save-dev
+  ```
+  - Configuração de arranque do compilador typescript(tsconfig.json)
+  ```
+  {
+  "compilerOptions": {
+    /*
+    * Quais lib/modulos serao usados. 
+    * Ex: Posso usar a lib es2015.Promise do ES6. 
+    * E meu target de compilacao ser ES5 (maior compatibilidade com navegadores)
+    */
+    "lib": 
+    [ 
+      "dom",
+      "es5",            // ES5 em sua totalidade 
+      "es2015.promise"  // ES6 Apenas Promise
+    ],
+    "target": "es5"
+  }
+  ```
+
+
 
 
  
