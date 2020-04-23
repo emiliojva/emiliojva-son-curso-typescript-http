@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc -w ",
+    "json_server_db": "json-server --watch ./db/produtos.json ",
     "server": "live-server ./public ",
-    "dev": "concurrently \"npm run tsc\" \"npm run server\" "
+    "r_js": "r_js",
+    "dev": "concurrently \"npm run tsc\" \"npm run json_server_db\" \"npm run server\" "
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +19,7 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
+    "json-server": "^0.16.1",
     "requirejs": "^2.3.6"
   }
 }

@@ -4,5 +4,7 @@
     "module": "AMD",
     "rootDir": "src",
     "outDir": "public/js",
+    "sourceMap": true,
+    "inlineSources": true, // está opcao inclui conteudo do .js tranpilado
   }
 }

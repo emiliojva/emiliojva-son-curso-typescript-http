@@ -1,5 +1,7 @@
 # TYPESCRIPT - MANIPULANDO PROTOCOLO HTTP
 
+## Introdução
+
 ## Criando ambiente
 - Criar um package.json:
     ```
@@ -65,4 +67,54 @@
 - Criar arquivos ```test.js``` e ```module1.ts``` na pasta ```src/```:
 
 
-## 
+## Melhorando ambiente de desenvolvimento
+- Executando todos os scripts definidos em "dev"
+    ### Execuções concorrentes
+      - Lib concorrently
+        ```
+         npm install concorrently --save-dev
+        ```
+      - Live-server locamente
+        ```
+        npm install live-server --save-dev
+        ```
+      - Executando todos os scripts definidos em "dev". No package.json, adicione em scripts :
+        "scripts" : {
+            "tsc"   :   "./node_modules/.bin/tsc -w",
+            "server :   "./node_modules/.bin/live-server ./public",
+            "dev"   :   "./node_modules/.bin/concorrently \"npm run tsc\" \"npm run server\"
+        }
+    
+## SourceMaps
+    tsc --sourceMaps
+    
+    - Entendendo a opção inlineSources (tsconfig > compilerOptions) do compilador Typescritpt:
+        ```
+        compilerOption: {
+            inlineSources: true
+        }
+        ```
+        * Inclui todo código do apontamento do .ts para dentro do .js
+    
+
+## Como não organizar requisições AJAX
+	- Não criar funções espalhadas pelo sistema. 
+	- Perda de controle do fluxo do aplicação. Ex:
+		```
+    import PostHttp from './http/post-http';
+
+    const meuMetodo = ( jsonString: string ) => {
+      return JSON.parse(jsonString);
+    };
+
+    const getPosts = ( responseText:string ) => {
+      // hidratar resultado para Classes do tipo Post
+      let hidratado = meuMetodo(responseText);
+      console.log( hidratado );
+    };
+
+    const error = ():any=>{ return "faca algo" }; 
+
+    new PostHttp().query(getPosts,error);
+		```
+
