@@ -1,12 +1,14 @@
 requirejs.config({
-  baseUrl: "js/",
+  baseUrl: "/js",
   paths: {
     'module1':'module1',
-    'test':'test'
+    'test':'test',
+    'post-list-page':'page/post-list-page'
   }
 });
 
-requirejs(['test'],() => {
+// 'test'
+requirejs(['page/post-list-page'],() => {
   // require('live-server')
   console.log('requirejs loaded')
 });

@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./response"], function (require, exports, response_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var httpVerbs;
@@ -25,11 +25,11 @@ define(["require", "exports"], function (require, exports) {
          */
         Http.prototype.createXhttp = function (verb, endpoint) {
             var xhttp = new XMLHttpRequest(); // objeto representando requisicoes assicronas(ajax)
-            xhttp.open(verb, endpoint);
+            xhttp.open(verb, endpoint, true);
             return xhttp;
         };
         /**
-         * Configura os manipuladores de retorno de sucesso ou falha
+         * Configura os manipuladores de retorno de sucesso ou falha operantes no objeto XMLHttpRequest
          * @param xhttp
          * @param resolve
          * @param reject
@@ -43,11 +43,13 @@ define(["require", "exports"], function (require, exports) {
             xhttp.onreadystatechange = function (event) {
                 // console.log(event);
                 if (this.readyState == 4) { // status OK do client
+                    // pegando a resposta do server como um tipo Response
+                    var response = new response_1.Response(xhttp.responseText, xhttp.status);
                     if (this.status == 200) {
-                        resolve(xhttp.responseText);
+                        resolve(response);
                     }
                     if (this.status == 400 || this.status == 500) {
-                        reject(xhttp.responseText);
+                        reject(response);
                     }
                 }
             };

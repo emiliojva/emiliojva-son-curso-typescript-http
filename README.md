@@ -168,6 +168,34 @@
   }
   ```
 
+## Organizando funcionalidades da aplicação em páginas
+
+- Criar abstração para uma pagina com um interface Page
+- Criar abtracão para Table e criar dinamicamente através se querySelector
+- Carregar modúlo diferente na mesma página e com outra lógica
+- metodo magico para getter and setter por atribuicao de propriedade;
+  ```
+  /**
+   * get
+   * set
+   * metodo magico para getter and setter por atribuicao de propriedade;
+   * Comporta-se table.name = "valor";
+   */
+  set data(value)
+  {
+    this._data = value;
+  }
+  ```
+- Informar para método do serviço retorno de uma Promise seu resultado
+  ```
+  query():Promise<Array<any>>
+  {
+    return this.http.get(this.end_point).then( (response:Response) => {
+      return JSON.parse(response.body);
+    })
+  }
+  ```
+
 
 
 

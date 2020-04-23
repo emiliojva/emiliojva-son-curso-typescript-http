@@ -1,3 +1,5 @@
+import { Response } from "./response";
+
 enum httpVerbs  {
   GET   = 'GET',
   POST  = 'POST'
@@ -5,7 +7,7 @@ enum httpVerbs  {
 
 export default class Http {
 
-  get(endpoint:string){
+  get(endpoint:string): Promise<Response>{
     return new Promise( (resolve,reject )=>{
       let xhttp:XMLHttpRequest = this.createXhttp(httpVerbs.GET,endpoint);
       this.configureCallbacks(xhttp,resolve,reject);
@@ -21,12 +23,12 @@ export default class Http {
   private createXhttp(verb: httpVerbs, endpoint:string)
   {
     const xhttp = new XMLHttpRequest(); // objeto representando requisicoes assicronas(ajax)
-    xhttp.open( verb , endpoint );
+    xhttp.open( verb , endpoint , true);
     return xhttp;
   }
 
   /**
-   * Configura os manipuladores de retorno de sucesso ou falha
+   * Configura os manipuladores de retorno de sucesso ou falha operantes no objeto XMLHttpRequest
    * @param xhttp 
    * @param resolve 
    * @param reject 
@@ -40,13 +42,15 @@ export default class Http {
     xhttp.onreadystatechange = function(event:Event):void {
       // console.log(event);
       if(this.readyState == 4){ // status OK do client
+        // pegando a resposta do server como um tipo Response
+        const response:Response = new Response(xhttp.responseText,xhttp.status);
         
         if(this.status == 200){
-          resolve(xhttp.responseText);
+          resolve(response);
         }
 
         if(this.status == 400 || this.status == 500){
-          reject(xhttp.responseText);
+          reject(response);
         }
 
       }

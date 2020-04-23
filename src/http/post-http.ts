@@ -1,4 +1,5 @@
 import Http from "./http";
+import { Response } from "./response";
 
 export default class PostHttp {
 
@@ -11,9 +12,11 @@ export default class PostHttp {
   
 
   // como era : query( callable, callableError )
-  query()
+  query():Promise<Array<any>>
   {
-    return this.http.get(this.end_point);
+    return this.http.get(this.end_point).then( (response:Response) => {
+      return JSON.parse(response.body);
+    })
   }
 
   save(){

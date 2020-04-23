@@ -8,7 +8,9 @@ define(["require", "exports", "./http"], function (require, exports, http_1) {
         }
         // como era : query( callable, callableError )
         PostHttp.prototype.query = function () {
-            return this.http.get(this.end_point);
+            return this.http.get(this.end_point).then(function (response) {
+                return JSON.parse(response.body);
+            });
         };
         PostHttp.prototype.save = function () {
             var method = 'POST'; // verb http

@@ -1,0 +1,1 @@
+{"version":3,"file":"response.js","sourceRoot":"","sources":["../../../src/http/response.ts"],"names":[],"mappings":";;;IAAA;QACE,kBAAmB,IAAW,EAAS,MAAa;YAAjC,SAAI,GAAJ,IAAI,CAAO;YAAS,WAAM,GAAN,MAAM,CAAO;QAAE,CAAC;QACzD,eAAC;IAAD,CAAC,AAFD,IAEC;IAFY,4BAAQ","sourcesContent":["export class Response {\r\n  constructor(public body:string, public status:number){}\r\n}"]}
