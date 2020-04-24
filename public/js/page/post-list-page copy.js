@@ -18,18 +18,13 @@ define(["require", "exports", "../http/post-http", "../components/post-table"], 
                 _this.postTable.data = posts;
                 // criando por método e nao pelo construtor da Table(arg1,arg2,data);
                 _this.postTable.make();
-            }, function (rejectResponse) { return console.log(rejectResponse); });
+            });
         };
         return PostListPage;
     }());
     exports.PostListPage = PostListPage;
-    try {
-        var postHttpService = new post_http_1.default();
-        var postTable = new post_table_1.PostTable('#my-table', ['nome', 'descricao']);
-        new PostListPage(postHttpService, postTable);
-    }
-    catch (e) {
-        console.log(e);
-    }
+    var postHttpService = new post_http_1.default();
+    var postTable = new post_table_1.PostTable('#my-table', ['nome', 'descricao']);
+    new PostListPage(postHttpService, postTable);
 });
-//# sourceMappingURL=post-list-page.js.map
+//# sourceMappingURL=post-list-page copy.js.map

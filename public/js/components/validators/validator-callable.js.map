@@ -1,0 +1,1 @@
+{"version":3,"file":"validator-callable.js","sourceRoot":"","sources":["../../../../src/components/validators/validator-callable.ts"],"names":[],"mappings":"","sourcesContent":["export default interface ValidatorCallable {\r\n  (value:string);\r\n}"]}

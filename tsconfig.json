@@ -8,7 +8,7 @@
     "lib": 
     [ 
       "dom",
-      "es5",            // ES5 em sua totalidade 
+      "ES5",            // ES5 em sua totalidade 
       "es2015.promise"  // ES6 Apenas Promise
     ],
     "target": "ES5", // versao ES.js da saida do compilador

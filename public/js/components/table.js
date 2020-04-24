@@ -6,6 +6,8 @@ define(["require", "exports"], function (require, exports) {
             this.selector = selector;
             this.columns = columns;
             this._data = _data;
+            if (!this.getElement())
+                throw "Seletor HTML não encontrado";
             this.createThead();
             this.createRows();
         }
@@ -24,20 +26,20 @@ define(["require", "exports"], function (require, exports) {
          * }
          */
         Table.prototype.createRows = function () {
-            if (this._data == undefined)
-                return;
-            /**
-             * Para cada jsonObject iterado eu construo uma linha em table
-             * Sempre montando de acordo com as colunas passadas
-             */
-            for (var _i = 0, _a = this._data; _i < _a.length; _i++) {
-                var row = _a[_i];
-                var tr = document.createElement('tr');
-                for (var _b = 0, _c = this.columns; _b < _c.length; _b++) {
-                    var column = _c[_b];
-                    // passo a tr criada e o valor referente a coluna iterada
-                    var td = this.createColumn(tr, row[column]);
-                    this.getElement().appendChild(tr);
+            if (this.getElement() && this._data !== undefined) {
+                /**
+                 * Para cada jsonObject iterado eu construo uma linha em table
+                 * Sempre montando de acordo com as colunas passadas
+                 */
+                for (var _i = 0, _a = this._data; _i < _a.length; _i++) {
+                    var row = _a[_i];
+                    var tr = document.createElement('tr');
+                    for (var _b = 0, _c = this.columns; _b < _c.length; _b++) {
+                        var column = _c[_b];
+                        // passo a tr criada e o valor referente a coluna iterada
+                        var td = this.createColumn(tr, row[column]);
+                        this.getElement().appendChild(tr);
+                    }
                 }
             }
         };
@@ -68,7 +70,6 @@ define(["require", "exports"], function (require, exports) {
             configurable: true
         });
         Table.prototype.make = function () {
-            console.log(this._data);
             this.createRows();
         };
         return Table;

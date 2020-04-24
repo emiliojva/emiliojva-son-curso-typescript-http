@@ -144,12 +144,8 @@
 
 
 ## PROMISES - CONFIGURAÇÃO PARA ADICIONAR EM TARGETS ES5
-
-  - Instalação do @types es6-promise
-  ```
-  npm install es6-promise --save-dev
-  ```
-  - Configuração de arranque do compilador typescript(tsconfig.json)
+  - A instação de de @types/promise não é mais necessária. Configura-se o target para saída 'ES5', mas o formato ```lib.componente``` pode ser acrescentada como ```"ES2005.promise"``` nas opções do compilador, atráves de ```"lib": {}```
+  - Configuração de arranque do compilador typescript(tsconfig.json):
   ```
   {
   "compilerOptions": {
@@ -168,14 +164,93 @@
   }
   ```
 
-## Organizando funcionalidades da aplicação em páginas
+## Criando tipo para resposta para Http Requests Ajax
+  - Mapear com classe todo tipo de idéia já definida. Respostas de um ajax é uma delas:
+  ```
+  export class Response {
+    constructor(public body:string, public status:number){}
+  }
+  ```
 
+## Hidratando tabelas com classes abstração
+  - Abstração completa de um tipo Table para listar com hidratação de tabelas html
+   ```
+    export abstract class Table {
+
+    constructor(
+      private selector: string,
+      private columns: Array<string>,
+      private _data?: Array<any>
+    )
+    {
+        this.createThead();
+        this.createRows();
+    }
+
+    private getElement()
+    {
+      return document.querySelector(this.selector);
+    }
+
+    private createRows()
+    {
+
+      if(this._data==undefined)
+        return;
+      
+      for(let row of this._data){
+
+        const tr = document.createElement('tr');
+
+        for(let column of this.columns){
+
+          // passo a tr criada e o valor referente a coluna iterada
+          const td = this.createColumn(tr,row[column]);
+          this.getElement().appendChild(tr)
+
+        }
+
+      }
+
+    }
+
+    private createColumn(trRow,columnData:any)
+    {
+      let td = document.createElement('td');
+      td.innerHTML = columnData;
+      trRow.appendChild(td);
+    }
+
+    private createThead()
+    {
+      for(let columnName of this.columns){
+        let th = document.createElement('th');
+        th.innerHTML = columnName;
+        this.getElement().parentElement.querySelector('thead').appendChild(th);
+      }
+    }
+
+    set data(value)
+    {
+      this._data = value;
+    }
+    
+    public make()
+    {
+      console.log( this._data );
+      this.createRows();
+    }
+  }
+  ```
+## Organizando funcionalidades da aplicação em páginas
 - Criar abstração para uma pagina com um interface Page
 - Criar abtracão para Table e criar dinamicamente através se querySelector
 - Carregar modúlo diferente na mesma página e com outra lógica
-- metodo magico para getter and setter por atribuicao de propriedade;
+- metodo magico para getter and setter por atribuicao de propriedade:
   ```
   /**
+   * Accessors - Interceptadores
+   * https://www.typescriptlang.org/docs/handbook/classes.html#accessors
    * get
    * set
    * metodo magico para getter and setter por atribuicao de propriedade;
@@ -195,6 +270,73 @@
     })
   }
   ```
+  - HTTP Protocol - Tipos de statusCode retornados pela requisição : https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+    * 200 - Request Success Ok
+    * 201 - Created
+
+## Modelando validação de dados
+  - Pattern Ideal para validação possui um :
+    * ValidatorManager (instancia para configurar grupo de validações por valor/tipo e estratégia)
+    * ValidadorCallableRule (Interface para ser usada como tipo do ValidatorManager na execução do matchPattern )
+    * Validator (Classe com metodos estaticos para cada tipo de validacao. Ex: 'required')
+    ```
+    export default class ValidatorManager {
+      constructor(private chainRules:Array<{
+        selectorField:string,  // seletor testado
+        rules:Array<ValidatorRuleCallable>, // array de validators a ser verificado. Cada Posicao do array tem um callable(string)
+        messageInvalid:string // mensagem de erro caso isValid falhe
+      }>){
+      }
+
+      public isValid():boolean{
+        for(let ruleSet of this.chainRules){
+          
+          for(let rule of ruleSet.rules){
+            const value = Form.getValueFromField(ruleSet.selectorField);
+            const isValid:boolean = rule(value);
+
+            if(!isValid){
+              alert(ruleSet.messageInvalid); return false;
+            }
+
+          }
+
+        }
+
+        return true;
+      }
+    }
+
+    export default interface ValidatorRuleCallable {
+      (value:string):boolean;
+    }
+
+    export default class Validators {
+      static required(value:string) {
+        return (typeof value !== undefined) && (value!=='') && (value !== null);
+      }
+    }
+    ```
+
+## Capturando respostas de erros com AJAX
+  - Utilizando-se do recurso reject() de uma Promise, pode-se capturar o erro através do segundo parametro do then() OU usar .catch logo após.
+    ```
+    private submit():void{
+
+      if(!this.isValid()){
+        return;
+      }
+
+      this.postHttp.save({
+          nome: Form.getValueFromField('nome'),
+          descricao: Form.getValueFromField('descricao')
+        }).then( ()=>this.goToList() ) // apos salvar mostrar na listagem
+          .catch( (rejectResponse:Response)=>{console.log(rejectResponse)});
+
+    }
+    ```
+    
+
 
 
 

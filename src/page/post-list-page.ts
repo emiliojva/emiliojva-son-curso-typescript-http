@@ -25,12 +25,17 @@ export class PostListPage implements Page {
       this.postTable.make();
 
       
-    })
+    },(rejectResponse:Response)=>console.log(rejectResponse))
 
   }
 }
 
+try {
 
-let postHttpService = new PostHttp();
-let postTable = new PostTable('#my-table',['nome','descricao']);
-new PostListPage(postHttpService,postTable);
+  let postHttpService = new PostHttp();
+  let postTable = new PostTable('#my-table',['nome','descricao']);
+  new PostListPage(postHttpService,postTable);
+
+} catch (e){
+  console.log(e);
+}

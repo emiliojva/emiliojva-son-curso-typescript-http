@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typescript na pratica - HTTP</title>
+    
 </head>
 <body>
 
     <h3>Meus posts</h3>
     
-    <button id='my-button' type='button'>Novo</button>
+    <button id='my-button' type='button' onclick="window.location.href='/post/post-new.html'">Novo</button>
 
     <table id='my-table' class='table'>
       <thead>
@@ -17,6 +18,10 @@
       </thead>
       <tbody></tbody>
     </table>
+
+    <script>
+      window.MODULE_INITIALIZER = ['page/post-list-page'];
+    </script>
 
     <script data-main="/main.js" src="/lib/require.js"></script>
 </body>

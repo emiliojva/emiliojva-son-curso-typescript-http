@@ -6,6 +6,9 @@ define(["require", "exports"], function (require, exports) {
             this.body = body;
             this.status = status;
         }
+        Response.prototype.toArray = function () {
+            return JSON.parse(this.body);
+        };
         return Response;
     }());
     exports.Response = Response;

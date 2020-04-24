@@ -15,41 +15,15 @@ export default class PostHttp {
   query():Promise<Array<any>>
   {
     return this.http.get(this.end_point).then( (response:Response) => {
-      return JSON.parse(response.body);
+      return response.toArray();
     })
   }
 
-  save(){
-
-    const method = 'POST'; // verb http
-    const xhttp = new XMLHttpRequest(); // objeto representando requisicoes assicronas(ajax)
-
-    xhttp.open(method,this.end_point);
-
-    /**
-     * Para pegar a reservada this do contexto do evento é necessario usar a notação com function(){}
-     * Usando a notação (event):any=>{} não possui acesso ao this do evento e sim da Classe
-     * ref: https://pt.stackoverflow.com/questions/143399/qual-a-diferen%C3%A7a-entre-function-e-por-que-n%C3%A3o-funciona-o-http-ge
-     */
-    xhttp.onreadystatechange = function(event:Event):void {
-      // console.log(event);
-      if(this.readyState == 4){ // status OK do client
-        
-        if(this.status == 200){
-          // callable(xhttp.responseText);
-        }
-
-        if(this.status == 400 || this.status == 500){
-          // callableError();
-        }
-
-      }
-
-      
-    };
-
-    xhttp.send();
-
+  save(data:{nome:string,descricao:string}){
+    
+    return this.http.post(this.end_point,data).then( (response:Response)=>{
+      return response.toArray();
+    });
   }
 
 }

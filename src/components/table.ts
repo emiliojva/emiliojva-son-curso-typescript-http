@@ -6,8 +6,11 @@ export abstract class Table {
     private _data?: Array<any>
   )
   {
-      this.createThead();
-      this.createRows();
+    if(!this.getElement())
+      throw "Seletor HTML não encontrado";
+
+    this.createThead();
+    this.createRows();
   }
 
   private getElement()
@@ -30,26 +33,29 @@ export abstract class Table {
   private createRows()
   {
 
-    if(this._data==undefined)
-      return;
-    
-    /**
-     * Para cada jsonObject iterado eu construo uma linha em table
-     * Sempre montando de acordo com as colunas passadas
-     */
-    for(let row of this._data){
+    if(this.getElement() && this._data !==undefined){
 
-      const tr = document.createElement('tr');
+      /**
+       * Para cada jsonObject iterado eu construo uma linha em table
+       * Sempre montando de acordo com as colunas passadas
+       */
+      for(let row of this._data){
 
-      for(let column of this.columns){
+        const tr = document.createElement('tr');
 
-        // passo a tr criada e o valor referente a coluna iterada
-        const td = this.createColumn(tr,row[column]);
-        this.getElement().appendChild(tr)
+        for(let column of this.columns){
+
+          // passo a tr criada e o valor referente a coluna iterada
+          const td = this.createColumn(tr,row[column]);
+          this.getElement().appendChild(tr)
+
+        }
 
       }
 
     }
+
+    
 
   }
 
@@ -69,12 +75,9 @@ export abstract class Table {
       th.innerHTML = columnName;
       this.getElement().parentElement.querySelector('thead').appendChild(th);
     }
+
+    
   }
-
- 
-
-
-
 
   /**
    * get
@@ -89,7 +92,6 @@ export abstract class Table {
   
   public make()
   {
-    console.log( this._data );
     this.createRows();
   }
 

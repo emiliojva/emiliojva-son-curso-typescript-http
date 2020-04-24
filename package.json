@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc -w ",
-    "json_server_db": "json-server --watch ./db/produtos.json ",
+    "json_server_db": "json-server --watch ./db/db.json ",
     "server": "live-server ./public ",
     "r_js": "r_js",
     "dev": "concurrently \"npm run tsc\" \"npm run json_server_db\" \"npm run server\" "
@@ -19,6 +19,7 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "json-server": "^0.16.1",
     "requirejs": "^2.3.6"
   }
