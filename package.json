@@ -19,7 +19,7 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "json-server": "^0.16.1",
     "requirejs": "^2.3.6"
   }
